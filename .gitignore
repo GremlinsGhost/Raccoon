@@ -1,0 +1,21 @@
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# Build artifacts
+build/
+out/
+dist/
+
+# Logs
+*.log
+
+# Editor junk
+*.swp
+*.swo
+*.tmp
+
+# OS junk
+.DS_Store
+Thumbs.db

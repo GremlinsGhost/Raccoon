@@ -1,4 +1,9 @@
-from BashCore.RunBash import run
+from Core.CommandRegistry import register
+from Core.Error import Error
 
-def status():
-    return run("./Commands/raccoon_status.sh")
+COMMAND = "status"
+
+def run():
+    return ("Status", "Raccoon online.")
+
+register(COMMAND, run)

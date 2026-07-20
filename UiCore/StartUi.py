@@ -1,5 +1,4 @@
-def start():
-    print("Raccoon UI ready.")
-    while True:
-        user_input = input("> ")
-        yield user_input
+
+def read_input():
+    print("raccoon> ", end="")
+    return input()

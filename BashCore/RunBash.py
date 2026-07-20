@@ -1,10 +1,21 @@
 import subprocess
 
-def run(command: str):
+def run_bash(script_path: str):
     result = subprocess.run(
-        command,
-        shell=True,
+        [script_path],
+        shell=False,
         capture_output=True,
         text=True
     )
-    return result.stdout.strip()
+
+    if result.returncode != 0:
+        return {
+            "ok": False,
+            "error": result.stderr.strip() or "unknown error",
+        }
+
+    return {
+        "ok": True,
+        "output": result.stdout,
+    }
+

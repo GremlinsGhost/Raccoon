@@ -1,35 +1,32 @@
-from UiCore.StartUi import start
+from UiCore.StartUi import read_input
 from UiCore.ParseInput import parse
-from UiCore.ShowOutput import show
+from UiCore.ShowOutput import show_output
+from UiCore.ShowError import show_error
+from Core.CommandRegistry import get
+from Core.Error import Error
 
-from SyncNodes.ProcessesNode import processes
-from SyncNodes.DiskNode import disk
-from SyncNodes.NetworkNode import network
+import SyncNodes.DiskNode
+import SyncNodes.NetworkNode
+import SyncNodes.ProcessesNode
+import SyncNodes.StatusNode
 
+def main():
+    while True:
+        raw = read_input()
+        cmd = parse(raw)
 
+        handler = get(cmd)
+        if handler is None:
+            show_error(f"Unknown command: {cmd}")
+            continue
 
-def raccoon():
-    for user_input in start():
-        command = parse(user_input)
+        result = handler()
 
-        if command == "status":
-            output = "Raccoon online."
-        elif command == "version":
-            output = "Raccoons test-of-concept"
-        elif command == "info":
-            output = "Minimal introspection tool running on Python."
-        elif command == "processes":
-            output = processes()
-        elif command == "disk":
-            output = disk()
-        elif command == "network":
-            output = network()
-
-        
+        if isinstance(result, Error):
+            show_error(str(result))
         else:
-            output = "Unknown command."
-
-        show(output)
+            title, content = result
+            show_output(title, content)
 
 if __name__ == "__main__":
-    raccoon()
+    main()

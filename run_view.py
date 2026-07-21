@@ -12,22 +12,24 @@ def main():
     vo = ViewObject(
         raw["type"],
         {
-            "columns": raw["columns"],
+            "header": " ".join(raw["columns"]),
             "rows": raw["rows"]
         }
     )
 
+
     log_data = ViewObject(
         "log",
         {
-            "rows": [
+            "lines": [
                 "Starting Raccoon...",
                 "Loading modules...",
-                "Pipeline OK",
+                "Layout engine online",
                 "Ready."
             ]
         }
     )
+
 
     layout = Layout({
         "top": vo,         # prosessitaulukko

@@ -1,18 +1,15 @@
 class TableView:
     def __init__(self, view_object):
-        self.view_object = view_object
+        data = view_object.data
+        self.header = data.get("header", "")
+        self.rows = data.get("rows", [])
 
     def render(self, canvas):
-        columns = self.view_object.get("columns") or []
-        rows = self.view_object.get("rows") or []
+        canvas.draw_text(0, 0, self.header)
+        y = 1
+        for row in self.rows:
+            canvas.draw_text(0, y, row)
+            y += 1
 
-        # Piirrä otsikot
-        header = " | ".join(columns)
-        canvas.draw_text(0, 0, header)
-
-        # Piirrä rivit
-        for i, row in enumerate(rows, start=1):
-            line = " | ".join(str(x) for x in row)
-            canvas.draw_text(0, i, line)
-
-        return canvas
+    def height(self):
+        return 1 + len(self.rows)

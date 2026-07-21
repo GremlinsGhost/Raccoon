@@ -1,11 +1,13 @@
 class LogView:
     def __init__(self, view_object):
-        self.view_object = view_object
+        self.lines = view_object.data.get("lines", [])
 
     def render(self, canvas):
-        logs = self.view_object.get("rows") or []
+        y = 0
+        for line in self.lines:
+            canvas.draw_text(0, y, line)
+            y += 1
 
-        for i, line in enumerate(logs):
-            canvas.draw_text(0, i, line)
+    def height(self):
+        return len(self.lines)
 
-        return canvas

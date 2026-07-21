@@ -11,12 +11,22 @@ class ViewPort:
         view_type = view_object.type
 
         if view_type == "table":
-            TableView(view_object).render(self.canvas)
+            part = TableView(view_object)
 
         elif view_type == "log":
-            LogView(view_object).render(self.canvas)
+            part = LogView(view_object)
 
         elif view_type == "process_map":
-            ProcessMap(view_object).render(self.canvas)
+            part = ProcessMap(view_object)
 
-        return self.canvas.render()
+        else:
+            return {"canvas": self.canvas, "height": 0}
+
+        
+        part.render(self.canvas)
+
+       
+        return {
+            "canvas": self.canvas,
+            "height": part.height()
+        }

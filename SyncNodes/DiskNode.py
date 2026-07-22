@@ -1,15 +1,16 @@
-from BashCore.RunBash import run_bash
-from Core.CommandRegistry import register
+from Raccoon.Core.CommandRegistry import register
+from Raccoon.BashCore.RunBash import run_bash
 
-COMMAND = "disk"
-SCRIPT = "commands/raccoon_disk.sh"
+SCRIPT = "raccoon_disk.sh"
+
 
 def run():
-    res = run_bash(SCRIPT)
+    output = run_bash(SCRIPT)
 
-    if not res["ok"]:
-        return Error(COMMAND, res["error"])
+    return {
+        "ok": True,
+        "raw": output,
+    }
 
-    return ("Disk", res["output"])
 
-register(COMMAND, run)
+register("disk", run)

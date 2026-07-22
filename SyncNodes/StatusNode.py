@@ -1,9 +1,16 @@
-from Core.CommandRegistry import register
-from Core.Error import Error
+from Raccoon.Core.CommandRegistry import register
+from Raccoon.BashCore.RunBash import run_bash
 
-COMMAND = "status"
+SCRIPT = "raccoon_status.sh"
+
 
 def run():
-    return ("Status", "Raccoon online.")
+    output = run_bash(SCRIPT)
 
-register(COMMAND, run)
+    return {
+        "ok": True,
+        "raw": output,
+    }
+
+
+register("status", run)

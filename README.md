@@ -1,19 +1,18 @@
 ## Licensing
+Raccoon is source-available software, not open-source software.
 
+Free use is available to individuals, students, educators,
+researchers, and hobbyists for permitted non-commercial purposes.
 
-- Raccoon is source-available software, not open source.
-
-Free use is available to individuals, students, researchers,
-educators, and hobbyists for permitted non-commercial purposes.
-
-Commercial use requires a separate paid license.
+Commercial use requires a separate commercial license.
 
 Military, weapons, intelligence, defense, and related use is
 strictly prohibited under all licenses. No paid license grants
 permission for these purposes.
 
-See `LICENSE` for the full terms and `COMMERCIAL-LICENSE.md` for
-commercial licensing.
+See LICENSE for the free-use terms and
+COMMERCIAL-LICENSE.md for commercial licensing terms.
+
 
 
 

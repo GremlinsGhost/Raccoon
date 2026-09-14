@@ -1,6 +1,5 @@
 ## Licensing
 
-Raccoon is dual-licensed:
 
 - Raccoon is source-available software, not open source.
 

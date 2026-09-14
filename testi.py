@@ -1,67 +1,87 @@
-# testi.py - KOKO HOMAN TESTI
-import struct
 import time
-from WaylandCore.connection import WaylandConnection
+from WaylandCore.Connection import WaylandConnection
 from WaylandCore.surface import WaylandSurface
 from WaylandCore.buffer import WaylandBuffer
 
-# 1) Yhdistetään
 print("🔌 Yhdistetään Waylandiin...")
 conn = WaylandConnection()
 
-# 2) Lähetetään sync + get_registry
-print("📤 Lähetetään sync...")
-conn.send(1, 0, struct.pack("I", 2))  # callback_id=2
+print("📤 Pyydetään registry...")
+conn.get_registry()
 
-print("📤 Lähetetään get_registry...")
-conn.send(1, 1, struct.pack("I", 3))  # new_id=3
-
-# 3) Odotetaan että registry vastaa
-print("⏳ Odotetaan registryä...")
-for _ in range(50):
+print("⏳ Odotetaan globaaleja...")
+for _ in range(200):
     conn.event_loop_once()
-    if conn.compositor is not None:
+    if len(conn.globals) >= 40:
         break
     time.sleep(0.01)
 
-# 4) Tulostetaan saadut ID:t
+print("🔗 Bindataan tarvittavat globaalit...")
+conn.bind_globals()
+
 print(f"\n📋 Compositor ID: {conn.compositor}")
 print(f"📋 SHM ID: {conn.shm}")
 print(f"📋 Seat ID: {conn.seat}")
+print(f"📋 xdg_wm_base ID: {conn.xdg_wm_base}")
 
-if conn.compositor is None:
-    print("❌ Ei saatu compositoria!")
-    exit()
+if conn.compositor is None or conn.shm is None or conn.xdg_wm_base is None:
+    print("❌ Compositor, SHM tai xdg_wm_base puuttuu!")
+    exit(1)
 
-# 5) Luodaan surface
-print("\n🪟 Luodaan surface...")
+# === 1. Luo wl_surface (EI bufferiä vielä) ===
+print("\n🪟 Luodaan wl_surface...")
 surface = WaylandSurface(conn)
 
-# 6) Luodaan buffer
-print("📦 Luodaan buffer...")
+# === 2. Luo xdg-ikkuna HETI ===
+print("\n🪟 Luodaan xdg-ikkuna...")
+xdg_surface, toplevel = conn.create_window(
+    surface.id,
+    title="Raccoon",
+    app_id="raccoon"
+)
+
+# === 3. Commit ilman bufferiä – tämä lähettää "configure pyydetty" ===
+print("📤 commit (ilman bufferiä)...")
+surface.commit()
+
+# === 4. Odota configure-eventtiä ===
+print("⏳ Odotetaan configure...")
+for _ in range(200):
+    conn.event_loop_once()
+    if xdg_surface.configured and toplevel.width > 0:
+        break
+    time.sleep(0.01)
+
+if not xdg_surface.configured:
+    print("⚠️  Ei saatu configurea, mutta jatketaan...")
+else:
+    print(f"✅ Configure saatu: serial={xdg_surface.last_serial}")
+    print(f"   Koko: {toplevel.width}x{toplevel.height}")
+
+# === 5. Nyt luodaan buffer ja piirretään ===
+print("\n📦 Luodaan buffer...")
 buffer = WaylandBuffer(conn, 800, 600)
 
-# 7) Piirretään topbar (sininen)
-print("🎨 Piirretään topbar...")
-buffer.fill_rect(0, 0, 800, 28, 0x44, 0x44, 0x88)   # sininen
+print("🎨 Piirretään...")
+buffer.fill_rect(0, 0, 800, 28, 0x44, 0x44, 0x88)      # topbar sininen
+buffer.fill_rect(0, 576, 800, 24, 0x33, 0x33, 0x33)    # bottombar harmaa
 
-# 8) Piirretään bottombar (harmaa)
-print("🎨 Piirretään bottombar...")
-buffer.fill_rect(0, 576, 800, 24, 0x33, 0x33, 0x33) # harmaa
-
-# 9) Luodaan wl_buffer ja näytetään
 print("🖼️ Luodaan wl_buffer...")
 buffer_id = buffer.create_wl_buffer()
 
-print("📤 Liitetään bufferi surfaceen...")
+# === 6. Attach + damage + commit ===
+print("📤 attach...")
 surface.attach(buffer_id)
 
-print("📤 Commit...")
+print("📤 damage...")
+surface.damage(0, 0, 800, 600)
+
+print("📤 commit...")
 surface.commit()
 
-# 10) Jäädään event loopiin (jotta ikkuna pysyy auki)
-print("\n🔄 Ikkuna näkyy! Paina Ctrl+C lopettaaksesi.")
+print("\n🔄 Ikkuna näkyy! Ctrl+C lopettaa.")
 try:
-    conn.event_loop()
+    while True:
+        conn.event_loop_once()
 except KeyboardInterrupt:
     print("\n👋 Lopetetaan...")

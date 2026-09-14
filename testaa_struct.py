@@ -1,4 +1,4 @@
-# testi_korjattu2.py
+# testaa_struct.py
 import socket
 import struct
 import time

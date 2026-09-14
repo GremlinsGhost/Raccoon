@@ -1,11 +1,19 @@
 ## Licensing
+Raccoon is source-available software, not open-source software.
 
-Raccoon is dual-licensed:
+Free use is available to individuals, students, educators,
+researchers, and hobbyists for permitted non-commercial purposes.
 
-- MIT License — for individuals, students, and non-commercial use
-- Commercial License — required for companies and commercial use
+Commercial use requires a separate commercial license.
 
-Commercial use without a license is prohibited.
+Military, weapons, intelligence, defense, and related use is
+strictly prohibited under all licenses. No paid license grants
+permission for these purposes.
+
+See LICENSE for the free-use terms and
+COMMERCIAL-LICENSE.md for commercial licensing terms.
+
+
 
 
 I’m testing if UI can

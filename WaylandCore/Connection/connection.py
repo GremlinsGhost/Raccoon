@@ -27,9 +27,9 @@ class WaylandConnection:
         self.shm = None
         self.seat = None
         self.xdg_wm_base = None
-        self.xdg_handler = None          # ← XdgWmBase-instanssi
-        self.xdg_surfaces = {}           # ← {id: XdgSurface}
-        self.xdg_toplevels = {}          # ← {id: XdgToplevel}
+        self.xdg_handler = None          # XdgWmBase-instanssi
+        self.xdg_surfaces = {}           # {id: XdgSurface}
+        self.xdg_toplevels = {}          # {id: XdgToplevel}
         self.callbacks = {}
         self.callbacks = {}
 

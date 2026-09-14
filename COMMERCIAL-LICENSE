@@ -1,59 +1,147 @@
-COMMERCIAL LICENSE (Raccoon)
+RACCOON COMMERCIAL LICENSE
+Version 1.0 — 2026
+
 Copyright (c) 2026 GremlinsGhost
 
+This Commercial License governs the commercial use of the Raccoon
+software (the “Software”).
 
-This software (the “Software”) is dual‑licensed.
-The open‑source version is provided under the MIT License.
-Commercial use of the Software is governed by the terms below.
+Raccoon is source-available software. It is not licensed under the
+MIT License or any other open-source license.
 
+1. Definitions
 
-1. Grant of License
-A commercial license grants the Licensee (a company, organization, or any entity engaging in commercial activity) the right to use, modify, integrate, and distribute the Software in proprietary or commercial products.
+“Commercial Use” means any use of the Software:
 
+(a) by or for a company, business, or other commercial organization;
 
-2. Restrictions
-Without a commercial license, companies and commercial entities are NOT permitted to:
+(b) in a product or service offered for payment;
 
-use the Software in any commercial product
+(c) in internal business operations or commercial tooling;
 
-integrate the Software into proprietary systems
+(d) to provide services to third parties;
 
-distribute the Software as part of a paid service
+(e) in game engines, game development, production pipelines, or
+    other commercial creative or technical workflows; or
 
-use the Software for internal commercial tooling
+(f) for any other direct or indirect commercial benefit.
 
-use the Software in game engines, game development, or production pipelines
+“Prohibited Use” means any direct or indirect use of the Software:
 
-Non‑commercial users (individuals, students, hobbyists) may continue to use the MIT‑licensed version freely.
+(a) by or for a military, armed force, intelligence service,
+    defense agency, or defense contractor;
 
+(b) in the design, development, testing, training, operation,
+    maintenance, or deployment of weapons or weapon systems;
 
-3. Commercial License Requirement
-Any commercial use requires:
+(c) for military targeting, battlefield management, command and
+    control, reconnaissance, or military surveillance;
 
-a signed commercial license agreement
+(d) in autonomous weapons or systems intended to select, track,
+    prioritize, or engage targets; or
 
-payment of applicable licensing fees
+(e) for any other military, weapons, intelligence, or defense-related
+    purpose.
 
-compliance with all terms set forth in the commercial agreement
+2. Commercial License Grant
 
-4. No Warranty
-The Software is provided “AS IS”, without warranty of any kind.
-Commercial licensees acknowledge that the Software may contain bugs, limitations, or incomplete features.
+Subject to this Agreement, payment of the applicable fees, and
+continued compliance with all license terms, the Licensor grants
+the Licensee a limited, non-exclusive, non-transferable,
+non-sublicensable, worldwide license to use, modify, integrate,
+and distribute the Software in commercial products and services.
 
+The specific scope, duration, number of users, deployment limits,
+and other conditions of a commercial license may be defined in a
+separate written agreement or order.
 
-5. Termination
-Commercial rights are revoked if:
+3. Prohibited Use
 
-the Licensee violates the terms
+No license is granted for Prohibited Use.
 
-the Licensee fails to pay licensing fees
+Prohibited Use is prohibited under every license, including free,
+commercial, enterprise, evaluation, educational, and custom
+licenses. No payment or separate agreement grants permission for
+Prohibited Use.
 
-the Licensee attempts to circumvent licensing restrictions
+4. Free Non-Commercial Use
 
-Upon termination, all commercial use must cease immediately.
+Individuals, students, educators, researchers, and hobbyists may
+use, study, modify, and share the Software for permitted
+non-commercial purposes under the terms of the Raccoon
+Source-Available License.
 
+Free non-commercial use does not include Commercial Use or
+Prohibited Use.
 
-6. Contact
-For commercial licensing, contact:
+5. Restrictions
 
-GremlinsGhost  
+Unless expressly permitted by a separate written agreement, the
+Licensee may not:
+
+(a) remove or alter copyright, attribution, or license notices;
+
+(b) remove, weaken, or bypass the restrictions in this Agreement;
+
+(c) sublicense the Software;
+
+(d) use the Software for Prohibited Use; or
+
+(e) represent the Software as being licensed under the MIT License
+    or as open-source software.
+
+Any redistribution or modified version must retain this Agreement
+and all applicable usage restrictions.
+
+6. Fees and Payment
+
+Commercial use requires a separate written commercial license and
+payment of the applicable licensing fees.
+
+Fees, payment terms, permitted deployments, user limits, support,
+and other commercial terms are determined by the Licensor and may
+be specified in a separate agreement.
+
+7. Termination
+
+This license terminates automatically if the Licensee:
+
+(a) materially breaches this Agreement;
+
+(b) fails to pay applicable licensing fees;
+
+(c) uses the Software for Prohibited Use; or
+
+(d) attempts to circumvent or remove the licensing restrictions.
+
+Upon termination, the Licensee must immediately stop all use,
+distribution, and deployment of the Software and destroy or return
+copies under its control, except where applicable law requires
+otherwise.
+
+8. No Warranty
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+NON-INFRINGEMENT.
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR SHALL NOT BE
+LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+9. Intellectual Property
+
+The Software, including its source code, documentation, name,
+logos, and associated materials, remains the property of the
+Licensor and its contributors, as applicable.
+
+This Agreement does not grant any trademark, patent, or other
+intellectual-property rights except for the limited rights
+expressly stated above.
+
+10. Contact
+
+For commercial licensing inquiries, contact:
+
+GremlinsGhost

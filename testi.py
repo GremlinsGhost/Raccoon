@@ -28,11 +28,11 @@ if conn.compositor is None or conn.shm is None or conn.xdg_wm_base is None:
     print("❌ Compositor, SHM tai xdg_wm_base puuttuu!")
     exit(1)
 
-# === 1. Luo wl_surface (EI bufferiä vielä) ===
+# 1. Luo wl_surface (EI bufferiä vielä)
 print("\n🪟 Luodaan wl_surface...")
 surface = WaylandSurface(conn)
 
-# === 2. Luo xdg-ikkuna HETI ===
+# 2. Luo xdg-ikkuna HETI 
 print("\n🪟 Luodaan xdg-ikkuna...")
 xdg_surface, toplevel = conn.create_window(
     surface.id,
@@ -40,11 +40,11 @@ xdg_surface, toplevel = conn.create_window(
     app_id="raccoon"
 )
 
-# === 3. Commit ilman bufferiä – tämä lähettää "configure pyydetty" ===
+# 3. Commit ilman bufferiä – tämä lähettää "configure pyydetty" 
 print("📤 commit (ilman bufferiä)...")
 surface.commit()
 
-# === 4. Odota configure-eventtiä ===
+# 4. Odota configure-eventtiä 
 print("⏳ Odotetaan configure...")
 for _ in range(200):
     conn.event_loop_once()

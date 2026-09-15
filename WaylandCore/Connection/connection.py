@@ -127,11 +127,7 @@ class WaylandConnection:
         payload += struct.pack("I", version)
         payload += struct.pack("I", new_id)
 
-        print(f"     [BIND DEBUG] name={name} iface={interface!r} "
-            f"version={version} new_id={new_id} "
-            f"iface_len={iface_len} padding={padding} "
-            f"payload_len={len(payload)}")
-        print(f"     [BIND DEBUG] payload hex = {payload.hex()}")
+
 
         self.send(self.registry, 0, payload)
         self.objects[new_id] = interface

@@ -63,8 +63,8 @@ print("\n📦 Luodaan buffer...")
 buffer = WaylandBuffer(conn, 800, 600)
 
 print("🎨 Piirretään...")
-buffer.fill_rect(0, 0, 800, 28, 0x44, 0x44, 0x88)      # topbar sininen
-buffer.fill_rect(0, 576, 800, 24, 0x33, 0x33, 0x33)    # bottombar harmaa
+buffer.fill_rect(0, 0, 800, 28, 0xFF, 0x00, 0x00)      # topbar 
+buffer.fill_rect(0, 576, 800, 24, 0x00, 0x00, 0xFF)    # bottombar 
 
 print("🖼️ Luodaan wl_buffer...")
 buffer_id = buffer.create_wl_buffer()

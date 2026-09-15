@@ -30,8 +30,10 @@ class WaylandConnection:
         self.xdg_handler = None          # XdgWmBase-instanssi
         self.xdg_surfaces = {}           # {id: XdgSurface}
         self.xdg_toplevels = {}          # {id: XdgToplevel}
+        self.seat_obj = None         # hiiri 
+        self.pointer = None          # hiiren liikkeet
         self.callbacks = {}
-        self.callbacks = {}
+
 
     def allocate_id(self):
         oid = self.next_id
@@ -76,6 +78,9 @@ class WaylandConnection:
             elif interface == "wl_seat":
                 self.seat = self.bind(name, interface, min(version, 7))
                 print(f"     → bind: wl_seat id={self.seat}")
+                # Luo WaylandSeat-instanssi
+                from ..seat import WaylandSeat
+                self.seat_obj = WaylandSeat(self, self.seat)
             elif interface == "xdg_wm_base":
                 self.xdg_wm_base = self.bind(name, interface, min(version, 4))
                 print(f"     → bind: xdg_wm_base id={self.xdg_wm_base}")
@@ -176,6 +181,17 @@ class WaylandConnection:
         if self.objects.get(obj_id) == "xdg_toplevel":
             handler = self.xdg_toplevels.get(obj_id)
             if handler and handler.handle_event(obj_id, opcode, payload):
+                return
+
+
+        # wl_seat-eventit
+        if self.seat_obj and obj_id == self.seat:
+            if self.seat_obj.handle_event(obj_id, opcode, payload):
+                return
+
+        # wl_pointer-eventit
+        if self.pointer and obj_id == self.pointer.id:
+            if self.pointer.handle_event(obj_id, opcode, payload):
                 return
 
         print(f"📩 obj={obj_id}, opcode={opcode}, len={len(payload)}")

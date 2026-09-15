@@ -158,4 +158,15 @@ class XdgToplevel:
             print(f"   🎛️  wm_capabilities")
             return True
 
+            
+    def move(self, seat_id, serial):
+        """xdg_toplevel.move(seat, serial) — opcode 5.
+
+        Pyytää compositoria aloittamaan ikkunan liikuttamisen.
+        Compositor ottaa hiiren vastuun, kunnes nappi vapautetaan.
+        """
+        payload = struct.pack("II", seat_id, serial)
+        self.conn.send(self.id, 5, payload)
+        print(f"   🚚 move(seat={seat_id}, serial={serial})")
+
         return False

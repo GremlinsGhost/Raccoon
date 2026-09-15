@@ -49,7 +49,12 @@ for _ in range(200):
     if xdg_surface.configured:
         break
     time.sleep(0.01)
-
+print("⏳ Odotetaan seat-capabilities...")
+for _ in range(100):
+    conn.event_loop_once()
+    if conn.pointer is not None:
+        break
+    time.sleep(0.01)
 
 # === 3. Raccoon UI:n layout ===
 print("\n📐 Rakennetaan layout...")
@@ -86,44 +91,65 @@ print("🎨 Maalataan layout...")
 canvas = RaccoonCanvas(buffer, skin=skin)
 canvas.paint_layout(layout)
 
-# === GOLDEN SPIRAL ===
-import math
+# === GOLDEN RATIO ===
+print("🌟 Piirretään golden ratio...")
 
-print("✨ Piirretään golden spiral...")
+PHI = 1.618033988749895
 
-# Fibonacci-luvut
-fib = [1, 1]
-for _ in range(15):
-    fib.append(fib[-1] + fib[-2])
+# --- Kultaisen leikkauksen viivat ---
+gx = WIDTH / PHI
+gy = HEIGHT / PHI
 
-# Aloita keskeltä
-cx = 640
-cy = 400
+canvas.create_line(gx, 0, gx, HEIGHT, color="#ff6b35", width=2)
+canvas.create_line(0, gy, WIDTH, gy, color="#ff6b35", width=2)
 
-# Piirretään neliöt ja niiden sisään neljännesympyrät
-# Jokainen neliö on käännetty 90° edelliseen verrattuna
-for i in range(len(fib) - 1):
-    size = fib[i] * 8   # skaalauskerroin
+print(f"   Kultainen leikkaus: x={gx:.0f}, y={gy:.0f}")
 
-    # Kulma kertoo mihin suuntaan piirretään
-    angle = i * (math.pi / 2)
-    dir_x = math.cos(angle)
-    dir_y = math.sin(angle)
 
-    # Piirretään neljännesympyrä
-    # (yksinkertaistettu: pisteitä käyrällä)
-    for t in range(0, 90):
-        theta = math.radians(t + i * 90)
-        radius = size
-        x = int(cx + math.cos(theta) * radius * dir_x - math.sin(theta) * radius * dir_y)
-        y = int(cy + math.sin(theta) * radius * dir_x + math.cos(theta) * radius * dir_y)
+# --- Fibonacci-suorakaiteet (kasvaa ulospäin) ---
+def fibonacci(n):
+    a, b = 1, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
 
-        if 0 <= x < WIDTH and 0 <= y < HEIGHT:
-            buffer.fill_rect(x, y, 2, 2, 0xFF, 0xD7, 0x00)  # kultainen väri
 
-    # Siirretään keskipistettä
-    cx += int(size * dir_y)
-    cy -= int(size * dir_x)
+fib = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+SCALE = 6
+OX, OY = 200, 300   # ensimmäisen suorakaiteen vasen yläkulma
+
+# Bounding box
+x0, y0 = OX, OY
+x1, y1 = OX + fib[0] * SCALE, OY + fib[0] * SCALE
+
+canvas.create_rectangle(x0, y0, x1, y1,
+                        outline="#4ecdc4", width=2)
+
+for i in range(1, len(fib)):
+    size = fib[i] * SCALE
+    direction = (i - 1) % 4   # 0=oikea, 1=alas, 2=vasen, 3=ylös
+
+    if direction == 0:      # oikealle
+        nx0, ny0 = x1, y0
+        nx1, ny1 = x1 + size, y0 + size
+        x1 = nx1
+    elif direction == 1:    # alas
+        nx0, ny0 = x0, y1
+        nx1, ny1 = x0 + size, y1 + size
+        y1 = ny1
+    elif direction == 2:    # vasemmalle
+        nx0, ny0 = x0 - size, y0
+        nx1, ny1 = x0, y0 + size
+        x0 = nx0
+    else:                   # ylös
+        nx0, ny0 = x0, y0 - size
+        nx1, ny1 = x0 + size, y0
+        y0 = ny0
+
+    canvas.create_rectangle(nx0, ny0, nx1, ny1,
+                            outline="#4ecdc4", width=2)
+
+print("✅ Golden ratio + Fibonacci-suorakaiteet valmis")
 
 print("✅ Golden spiral valmis")
 
@@ -139,6 +165,17 @@ surface.damage(0, 0, WIDTH, HEIGHT)
 
 print("📤 commit...")
 surface.commit()
+
+# === Pointer callback: liikuta ikkunaa kun vasen nappi painetaan ===
+def on_pointer_button(serial, button, state):
+    if button == 0x110 and state == 1:   # BTN_LEFT + PRESSED
+        print(f"   🚚 Pyydetään move: seat={conn.seat}, serial={serial}")
+        toplevel.move(conn.seat, serial)
+
+
+# Aseta callback kun pointer on luotu
+if conn.pointer:
+    conn.pointer.on_button = on_pointer_button
 
 
 # === 7. Event loop ===

@@ -1,6 +1,7 @@
+from .MotionProfile import MotionProfile
 from .LayoutCompute import compute_layout
 from .PanelRect import PanelRect
-from .MotionProfile import MotionProfile
+
 
 
 class UiLayoutManager:
@@ -42,7 +43,7 @@ class UiLayoutManager:
 
     # RECTIEN ALUSTUS
     def _init_rects(self):
-        self.rects["root"] = PanelRect("root")
+        self.rects["root"] = PanelRect("root", 0, 0, self.width, self.height)
         self.rects["left"] = PanelRect("left")
         self.rects["right"] = PanelRect("right")
         self.rects["topbar"] = PanelRect("topbar")
